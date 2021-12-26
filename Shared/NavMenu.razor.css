@@ -1,0 +1,53 @@
+.top-row {
+    height: 3.5rem;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    color: #CB2D6F;
+}
+
+/* navigationbar background */
+
+.navbar-background {
+    background-color: #0F292F;
+}
+.navbar-border {
+    border-bottom: 3px solid;
+    border-color: rgba(255,255,255,0.25);
+}
+
+.oi {
+    width: 2rem;
+    font-size: 1.1rem;
+    vertical-align: text-top;
+    top: -2px;
+}
+
+.navbar-text-color-font {
+    font-family: bender-bold;
+}
+
+.nav-item {
+    font-size: 0.9rem;
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+}
+
+.nav-item ::deep a {
+    color: #CB2D6F;
+    border-radius: 4px;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    line-height: 3rem;
+}
+
+.nav-item ::deep a.active {
+    background-color: rgba(255,255,255,0.25);
+}
+
+.nav-item ::deep a:hover {
+    background-color: rgba(19, 160, 152,0.1);
+}

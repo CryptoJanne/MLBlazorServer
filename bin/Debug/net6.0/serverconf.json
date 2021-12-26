@@ -1,0 +1,5 @@
+{
+    "url": "https://a.cryptojanne.ravendb.community:5100",
+    "certificatePath": "./certificates/blazor.pfx",
+    "password": "bajsbajs"
+}

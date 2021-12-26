@@ -1,0 +1,80 @@
+﻿@inject NavigationManager NavigationManager
+
+
+<nav class="navbar navbar-expand-sm navbar-border mb-3 navbar-background navbar-text-color-font">
+    <div class="container">
+        @*
+            how to customize https://getbootstrap.com/docs/4.0/components/navbar/#brand
+        *@
+        <a class="navbar-brand" href="#">
+            @*
+                pictures need to reside in wwwroot folder
+            *@
+            CRYPTOJANNE
+        </a>
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <NavLink class="nav-link" href="blog">
+                    @*
+                        the span class uses open-iconic pictures,
+                        you can find then at https://useiconic.com/open
+                        simply swap out the last oi-xxx with something from the site
+                    *@
+                    <span class="oi oi-pencil" aria-hidden="true"></span> BLOG
+                </NavLink>
+            </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="me">
+                    @*
+                        the span class uses open-iconic pictures,
+                        you can find then at https://useiconic.com/open
+                        simply swap out the last oi-xxx with something from the site
+                    *@
+                    <span class="oi oi-question-mark" aria-hidden="true"></span> ME
+                </NavLink>
+            </li>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <AuthorizeView>
+                        <Authorized>
+                            <form method="post" action="Identity/Account/LogOut">
+                                <button type="submit" class="nav-link btn btn-link">Log out</button>
+                                </form>
+                        </Authorized>
+                        <NotAuthorized>
+                            <a href="Identity/Account/Login">Log in</a>
+                        </NotAuthorized>
+                    </AuthorizeView>
+                </li>
+            </ul>
+        </ul>
+    </div>
+
+</nav>
+
+<style>
+    .dropdownstuff.e-dropdown-btn {
+        color: #CB2D6F;
+        border: none;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        line-height: 3rem;
+        background-color: rgba(255,255,255,0);
+        font-family: bender-bold;
+        font-size: 0.9rem;
+    }
+    .dropdownstuff.e-dropdown-popup {
+        background-color: #cccccc;
+        color: #CB2D6F;
+        font-family: bender-bold;
+    }
+</style>
+
+@code {
+
+    void bajs()
+    {
+        
+    }
+}

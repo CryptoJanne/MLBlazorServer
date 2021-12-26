@@ -1,0 +1,47 @@
+﻿@page "/fetchdata"
+@using System.Text.Json
+@using System.Text.Json.Serialization;
+@using APIHandler;
+@inject ServerAPIHandler serverAPIHandler;
+@inject IHttpClientFactory ClientFactory
+
+<AuthorizeView>
+    <Authorized>
+        @TestStringOne
+        <button class="button" @onclick="UpdateHeading">
+            Update string
+        </button>
+        <button class="button" @onclick="TestDelete">
+            delete test
+        </button>
+        this is @teststringtwo
+    </Authorized>
+    <NotAuthorized>
+        You are not authorized for this page.
+    </NotAuthorized>
+</AuthorizeView>
+
+@code
+{
+    private bool shouldRender;
+    protected override bool ShouldRender() => shouldRender;
+    string TestStringOne = "Click button to update this text";
+    string teststringtwo;
+    int goup = 0;
+    protected override async Task OnInitializedAsync()
+    {
+    //var asdfff = await serverAPIHandler.LoadTest();
+    //teststringtwo = asdfff.tid;
+        shouldRender = true;
+    }
+    private async void UpdateHeading()
+    {
+        var asdff = await serverAPIHandler.QueryTest();
+        teststringtwo = asdff.Count().ToString();
+    // teststringtwo = tider.Count.ToString();
+    }
+    private async void TestDelete()
+    {
+        
+    }
+}
