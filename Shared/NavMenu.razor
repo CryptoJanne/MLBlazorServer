@@ -35,16 +35,24 @@
             </li>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
+                    @*
                     <AuthorizeView>
                         <Authorized>
                             <form method="post" action="Identity/Account/LogOut">
                                 <button type="submit" class="nav-link btn btn-link">Log out</button>
-                                </form>
+                            </form>
                         </Authorized>
                         <NotAuthorized>
                             <a href="Identity/Account/Login">Log in</a>
                         </NotAuthorized>
                     </AuthorizeView>
+                    *@
+                    <NavLink class="nav-link" href="login">
+                        @*
+                        this is only here temporary until login is fixed
+                      *@
+                      <span class="oi oi-question-mark" aria-hidden="true"></span> LOGIN
+                                    </NavLink>
                 </li>
             </ul>
         </ul>

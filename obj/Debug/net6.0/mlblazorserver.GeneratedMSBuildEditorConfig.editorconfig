@@ -27,21 +27,29 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRmV0Y2hEYXRhLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/max/development/server/mlblazorserver/Pages/Index.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXgucmF6b3I=
+[/home/max/development/server/mlblazorserver/Pages/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTG9naW4ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/max/development/server/mlblazorserver/Shared/LoginDisplay.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL0xvZ2luRGlzcGxheS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/max/development/server/mlblazorserver/Shared/SurveyPrompt.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1N1cnZleVByb21wdC5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
 [/home/max/development/server/mlblazorserver/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
+
+[/home/max/development/server/mlblazorserver/Pages/Blog.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQmxvZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-bkw70lo58x
+
+[/home/max/development/server/mlblazorserver/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-axq0bwirf7
+
+[/home/max/development/server/mlblazorserver/Pages/Me.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTWUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-ujlc4azd25
 
 [/home/max/development/server/mlblazorserver/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL01haW5MYXlvdXQucmF6b3I=

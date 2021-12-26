@@ -4,10 +4,12 @@
 @using APIHandler;
 @inject ServerAPIHandler serverAPIHandler;
 @inject IHttpClientFactory ClientFactory
-
-<AuthorizeView>
-    <Authorized>
-        @TestStringOne
+<style>
+    body {
+        background-color: #0f292f;
+    }
+</style>
+@TestStringOne
         <button class="button" @onclick="UpdateHeading">
             Update string
         </button>
@@ -15,11 +17,7 @@
             delete test
         </button>
         this is @teststringtwo
-    </Authorized>
-    <NotAuthorized>
-        You are not authorized for this page.
-    </NotAuthorized>
-</AuthorizeView>
+
 
 @code
 {
