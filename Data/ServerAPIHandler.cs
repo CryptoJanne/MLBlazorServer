@@ -20,14 +20,6 @@ namespace APIHandler
         public string certificatePath { get; set; }
         public string password { get; set; }
     }
-    public static class JsonFileReader
-    {
-        public static async Task<T> ReadAsync<T>(string filePath)
-        {
-            using FileStream stream = File.OpenRead(filePath);
-            return await JsonSerializer.DeserializeAsync<T>(stream);
-        }
-    }
     public class DocumentStoreHolder
     {
         //ServerConfigJson asdf = await 
@@ -76,6 +68,86 @@ namespace APIHandler
                 var bajs = await asyncSession.LoadAsync<SystemStats>("ServerDatas/1638721-A");
                 return bajs;
             }
+        }
+        
+        public async Task<(List<SystemStats>, DateTime)> QueryServerForLogDataFiveMinutes()
+        {
+            DateTime now = DateTime.Now;
+            DateTime fiveMinAgo = now.Subtract(TimeSpan.FromMinutes(5));
+            using (var asyncSession = DocumentStoreHolder.Store.OpenAsyncSession())
+            {
+                List<SystemStats> data = await asyncSession
+                    .Query<SystemStats>()
+                    .Where(x => x.tid > fiveMinAgo)
+                    .ToListAsync();
+                return (data, now);
+            }
+        }
+
+        public async Task<List<List<SystemStats>>> QueryAndCalculateAndSplit5MinInto1MinSegments()
+        {
+            List<SystemStats> minOne = new List<SystemStats>();
+            List<SystemStats> minTwo = new List<SystemStats>();
+            List<SystemStats> minThree = new List<SystemStats>();
+            List<SystemStats> minFour = new List<SystemStats>();
+            List<SystemStats> minFive = new List<SystemStats>();
+            List<List<SystemStats>> divided = new List<List<SystemStats>>();
+            var returnTuple = await QueryServerForLogDataFiveMinutes();
+            List<SystemStats> allData = returnTuple.Item1;
+            DateTime now = returnTuple.Item2;
+            DateTime oneMinAgo = now.Subtract(TimeSpan.FromMinutes(1));
+            DateTime twoMinAgo = now.Subtract(TimeSpan.FromMinutes(2));
+            DateTime threeMinAgo = now.Subtract(TimeSpan.FromMinutes(3));
+            DateTime fourMinAgo = now.Subtract(TimeSpan.FromMinutes(4));
+            DateTime fiveMinAgo = now.Subtract(TimeSpan.FromMinutes(5));
+            foreach (SystemStats stat in allData)
+            {
+                if (stat.tid < now && stat.tid > oneMinAgo)
+                {
+                    minOne.Add(stat);
+                }
+                else if (stat.tid < oneMinAgo && stat.tid > twoMinAgo)
+                {
+                    minTwo.Add(stat);
+                }
+                else if (stat.tid < twoMinAgo && stat.tid > threeMinAgo)
+                {
+                    minThree.Add(stat);
+                }
+                else if (stat.tid < threeMinAgo && stat.tid > fourMinAgo)
+                {
+                    minFour.Add(stat);
+                }
+                else if(stat.tid < fourMinAgo && stat.tid > fiveMinAgo)
+                {
+                    minFive.Add(stat);
+                }
+            }
+            divided.Add(minOne);
+            divided.Add(minTwo);
+            divided.Add(minThree);
+            divided.Add(minFour);
+            divided.Add(minFive);
+            return divided;
+        }
+
+        public async Task<Dictionary<string, float>> testdis()
+        {
+            Dictionary<string, float> returnvalue = new Dictionary<string, float>();
+            var query = await QueryAndCalculateAndSplit5MinInto1MinSegments();
+            foreach (var minute in query)
+            {
+                float cpu1 = 0;
+                foreach (var second in minute)
+                {
+                    cpu1 += second.cpu.core1;
+                }
+
+                cpu1 = cpu1 / minute.Count;
+                returnvalue.Add(minute.First().tid.ToString(), cpu1);
+            }
+
+            return returnvalue;
         }
     }
 }

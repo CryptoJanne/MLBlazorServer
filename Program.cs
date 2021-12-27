@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using mlblazorserver.Areas.Identity;
 using mlblazorserver.Data;
+using Blazorise;
+using Blazorise.Bootstrap5;
+using Blazorise.Icons.FontAwesome;
 using APIHandler;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +25,13 @@ builder.Services.AddSingleton<ServerAPIHandler>();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services
+    .AddBlazorise( options =>
+    {
+        options.ChangeTextOnKeyPress = true; // optional
+    } )
+    .AddBootstrap5Providers()
+    .AddFontAwesomeIcons();
 
 var app = builder.Build();
 

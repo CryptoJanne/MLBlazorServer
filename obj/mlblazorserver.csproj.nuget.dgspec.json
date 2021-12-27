@@ -38,6 +38,18 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Blazorise.Bootstrap5": {
+              "target": "Package",
+              "version": "[0.9.5.3, )"
+            },
+            "Blazorise.Charts": {
+              "target": "Package",
+              "version": "[0.9.5.3, )"
+            },
+            "Blazorise.Icons.FontAwesome": {
+              "target": "Package",
+              "version": "[0.9.5.3, )"
+            },
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.1, )"

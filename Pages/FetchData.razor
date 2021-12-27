@@ -2,44 +2,118 @@
 @using System.Text.Json
 @using System.Text.Json.Serialization;
 @using APIHandler;
+@using Blazorise.Charts
+@using System;
+@using System.Drawing;
+@using System.Threading.Tasks;
+@using System.Collections.Generic
+@using Blazorise;
+@using System.Linq;
+
+
 @inject ServerAPIHandler serverAPIHandler;
 @inject IHttpClientFactory ClientFactory
+
 <style>
     body {
         background-color: #0f292f;
     }
 </style>
-@TestStringOne
-        <button class="button" @onclick="UpdateHeading">
-            Update string
-        </button>
-        <button class="button" @onclick="TestDelete">
-            delete test
-        </button>
-        this is @teststringtwo
+
+<Button Clicked="@(async () => await HandleRedraw())">Redraw</Button>
+<LineChart @ref="lineChart" TItem="double" OptionsObject="@chartOptions"/>
 
 
 @code
 {
     private bool shouldRender;
     protected override bool ShouldRender() => shouldRender;
-    string TestStringOne = "Click button to update this text";
-    string teststringtwo;
-    int goup = 0;
+    
     protected override async Task OnInitializedAsync()
     {
-    //var asdfff = await serverAPIHandler.LoadTest();
-    //teststringtwo = asdfff.tid;
         shouldRender = true;
     }
-    private async void UpdateHeading()
+    LineChart<double> lineChart;
+
+    protected override async Task OnAfterRenderAsync( bool firstRender )
     {
-        var asdff = await serverAPIHandler.QueryTest();
-        teststringtwo = asdff.Count().ToString();
-    // teststringtwo = tider.Count.ToString();
+        if ( firstRender )
+        {
+            await HandleRedraw();
+        }
     }
-    private async void TestDelete()
+
+    async Task HandleRedraw()
     {
-        
+        await lineChart.Clear();
+        var kvar = await Labels();
+        var kwekek = await getdata();
+        await lineChart.AddLabelsDatasetsAndUpdate( kvar, GetLineChartDataset(kwekek) );
+    }
+
+    LineChartDataset<double> GetLineChartDataset(List<double> asdf)
+    {
+        return new LineChartDataset<double>
+        {
+            
+            Label = "# of randoms",
+            Data = asdf,
+            BackgroundColor = backgroundColors[0],
+            BorderColor = borderColors[0],
+            Fill = true,
+            PointRadius = 2,
+            BorderDash = new List<int> { }
+        };
+    }
+    object chartOptions = new
+    {
+        Scales = new
+        {
+            YAxes = new[] {
+                new {
+                    Ticks = new
+                    {
+                        BeginAtZero = true,
+                        Min = 0,
+                        Max = 100,
+                    }
+                }
+            }
+        }
+    };
+    async Task<string[]> Labels()
+    {
+        var asdf = await serverAPIHandler.testdis();
+        List<string> asdawd = new List<string>();
+        foreach (var key in asdf.Keys)
+        {
+            asdawd.Add(key);
+        }
+        return asdawd.ToArray();
+    }
+
+    async Task<List<double>> getdata()
+    {
+        var asdf = await serverAPIHandler.testdis();
+        List<double> asdawd = new List<double>();
+        foreach (var key in asdf.Values)
+        {
+            asdawd.Add(Convert.ToDouble(key));
+        }
+        return asdawd;
+    }
+
+    List<string> backgroundColors = new() { ChartColor.FromRgba( 255, 99, 132, 0.2f ), ChartColor.FromRgba( 54, 162, 235, 0.2f ), ChartColor.FromRgba( 255, 206, 86, 0.2f ), ChartColor.FromRgba( 75, 192, 192, 0.2f ), ChartColor.FromRgba( 153, 102, 255, 0.2f ), ChartColor.FromRgba( 255, 159, 64, 0.2f ) };
+    List<string> borderColors = new() { ChartColor.FromRgba( 255, 99, 132, 1f ), ChartColor.FromRgba( 54, 162, 235, 1f ), ChartColor.FromRgba( 255, 206, 86, 1f ), ChartColor.FromRgba( 75, 192, 192, 1f ), ChartColor.FromRgba( 153, 102, 255, 1f ), ChartColor.FromRgba( 255, 159, 64, 1f ) };
+
+    List<double> RandomizeData()
+    {
+        var r = new Random( DateTime.Now.Millisecond );
+
+        return new List<double> { r.Next( 3, 50 ) * r.NextDouble(), r.Next( 3, 50 ) * r.NextDouble(), r.Next( 3, 50 ) * r.NextDouble(), r.Next( 3, 50 ) * r.NextDouble(), r.Next( 3, 50 ) * r.NextDouble(), r.Next( 3, 50 ) * r.NextDouble() };
+    }
+    private async void testmath()
+    {
+        serverAPIHandler.testdis();
     }
 }
