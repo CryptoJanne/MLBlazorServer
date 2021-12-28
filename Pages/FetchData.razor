@@ -18,22 +18,60 @@
     body {
         background-color: #0f292f;
     }
+    .normal-text {
+        color: #CCCCCC;
+        font-family: bender-bold;
+    }
 </style>
 
-<Button Clicked="@(async () => await HandleRedraw())">Redraw</Button>
-<LineChart @ref="lineChart" TItem="double" OptionsObject="@chartOptions"/>
+<Row>
+    <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
+        <LineChart @ref="cpuCore1" TItem="double" OptionsObject="@chartOptions"/>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
+        <LineChart @ref="cpuCore2" TItem="double" OptionsObject="@chartOptions"/>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
+        <LineChart @ref="cpuCore3" TItem="double" OptionsObject="@chartOptions"/>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
+        <LineChart @ref="cpuCore4" TItem="double" OptionsObject="@chartOptions"/>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
+        <LineChart @ref="cpuCore5" TItem="double" OptionsObject="@chartOptions"/>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
+        <LineChart @ref="cpuCore6" TItem="double" OptionsObject="@chartOptions"/>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
+        <LineChart @ref="cpuCore7" TItem="double" OptionsObject="@chartOptions"/>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
+        <LineChart @ref="cpuCore8" TItem="double" OptionsObject="@chartOptions"/>
+    </Column>
+    
+</Row>
 
+<Button Clicked="@(async () => await HandleRedraw())">Redraw</Button>
 
 @code
 {
     private bool shouldRender;
     protected override bool ShouldRender() => shouldRender;
+
     
     protected override async Task OnInitializedAsync()
     {
         shouldRender = true;
     }
-    LineChart<double> lineChart;
+    LineChart<double> cpuCore1;
+    LineChart<double> cpuCore2;
+    LineChart<double> cpuCore3;
+    LineChart<double> cpuCore4;
+    LineChart<double> cpuCore5;
+    LineChart<double> cpuCore6;
+    LineChart<double> cpuCore7;
+    LineChart<double> cpuCore8;
 
     protected override async Task OnAfterRenderAsync( bool firstRender )
     {
@@ -42,25 +80,109 @@
             await HandleRedraw();
         }
     }
-
     async Task HandleRedraw()
     {
-        await lineChart.Clear();
-        var kvar = await Labels();
-        var kwekek = await getdata();
-        await lineChart.AddLabelsDatasetsAndUpdate( kvar, GetLineChartDataset(kwekek) );
+        await cpuCore1.Clear();
+        await cpuCore2.Clear();
+        await cpuCore3.Clear();
+        await cpuCore4.Clear();
+        await cpuCore5.Clear();
+        await cpuCore6.Clear();
+        await cpuCore7.Clear();
+        await cpuCore8.Clear();
+        var kwekek = await serverAPIHandler.GetFiveMinDataSplitIntoDict();
+        List<double> core1 = new List<double>();
+        List<double> core2 = new List<double>();
+        List<double> core3 = new List<double>();
+        List<double> core4 = new List<double>();
+        List<double> core5 = new List<double>();
+        List<double> core6 = new List<double>();
+        List<double> core7 = new List<double>();
+        List<double> core8 = new List<double>();
+        for (int i = 0; i < kwekek.Count; i++)
+        {
+            switch (i)
+            {
+                case 0:
+                    foreach (var val in kwekek[i].Values)
+                    {
+                        core1.Add(val);
+                    }
+                    break;
+                case 1:
+                    foreach (var val in kwekek[i].Values)
+                    {
+                        core2.Add(val);
+                    }
+                    break;    
+                case 2:
+                    foreach (var val in kwekek[i].Values)
+                    {
+                        core3.Add(val);
+                    }
+                    break;
+                case 3:
+                    foreach (var val in kwekek[i].Values)
+                    {
+                        core4.Add(val);
+                    }
+                    break;
+                case 4:
+                    foreach (var val in kwekek[i].Values)
+                    {
+                        core5.Add(val);
+                    }
+                    break;
+                case 5:
+                    foreach (var val in kwekek[i].Values)
+                    {
+                        core6.Add(val);
+                    }
+                    break;
+                case 6:
+                    foreach (var val in kwekek[i].Values)
+                    {
+                        core7.Add(val);
+                    }
+                    break;
+                case 7:
+                    foreach (var val in kwekek[i].Values)
+                    {
+                        core8.Add(val);
+                    }
+                    break;    
+            }
+            
+        }
+        core1.Reverse();
+        core2.Reverse();
+        core3.Reverse();
+        core4.Reverse();
+        core5.Reverse();
+        core6.Reverse();
+        core7.Reverse();
+        core8.Reverse();
+        await cpuCore1.AddLabelsDatasetsAndUpdate( xAxis, GetLineChartDataset(core1, "Core1") );
+        await cpuCore2.AddLabelsDatasetsAndUpdate( xAxis, GetLineChartDataset(core2, "Core2") );
+        await cpuCore3.AddLabelsDatasetsAndUpdate( xAxis, GetLineChartDataset(core3, "Core3") );
+        await cpuCore4.AddLabelsDatasetsAndUpdate( xAxis, GetLineChartDataset(core4, "Core4") );
+        await cpuCore5.AddLabelsDatasetsAndUpdate( xAxis, GetLineChartDataset(core5, "Core5") );
+        await cpuCore6.AddLabelsDatasetsAndUpdate( xAxis, GetLineChartDataset(core6, "Core6") );
+        await cpuCore7.AddLabelsDatasetsAndUpdate( xAxis, GetLineChartDataset(core7, "Core7") );
+        await cpuCore8.AddLabelsDatasetsAndUpdate( xAxis, GetLineChartDataset(core8, "Core8") );
+        //await setDataForTest();
     }
 
-    LineChartDataset<double> GetLineChartDataset(List<double> asdf)
+    LineChartDataset<double> GetLineChartDataset(List<double> data, string chartName)
     {
         return new LineChartDataset<double>
         {
             
-            Label = "# of randoms",
-            Data = asdf,
+            Label = chartName,
+            Data = data,
             BackgroundColor = backgroundColors[0],
             BorderColor = borderColors[0],
-            Fill = true,
+            Fill = false,
             PointRadius = 2,
             BorderDash = new List<int> { }
         };
@@ -81,39 +203,23 @@
             }
         }
     };
-    async Task<string[]> Labels()
+    /*
+    async Task setDataForTest()
     {
-        var asdf = await serverAPIHandler.testdis();
-        List<string> asdawd = new List<string>();
-        foreach (var key in asdf.Keys)
-        {
-            asdawd.Add(key);
-        }
-        return asdawd.ToArray();
+        var asdf = await serverAPIHandler.GetFiveMinDataSplitIntoDict();
+        minute1 = $"element 0 = {asdf.Keys.ElementAt(0)} - {asdf.Values.ElementAt(0)}";
+        minute2 = $"element 1 = {asdf.Keys.ElementAt(1)} - {asdf.Values.ElementAt(1)}";
+        minute3 = $"element 2 = {asdf.Keys.ElementAt(2)} - {asdf.Values.ElementAt(2)}";
+        minute4 = $"element 3 = {asdf.Keys.ElementAt(3)} - {asdf.Values.ElementAt(3)}";
+        minute5 = $"element 4 = {asdf.Keys.ElementAt(4)} - {asdf.Values.ElementAt(4)}";
     }
-
-    async Task<List<double>> getdata()
-    {
-        var asdf = await serverAPIHandler.testdis();
-        List<double> asdawd = new List<double>();
-        foreach (var key in asdf.Values)
-        {
-            asdawd.Add(Convert.ToDouble(key));
-        }
-        return asdawd;
-    }
-
+    */
+    string[] xAxis = { "4-5min", "3-4min", "2-3min", "1-2min", "0-1min"};
     List<string> backgroundColors = new() { ChartColor.FromRgba( 255, 99, 132, 0.2f ), ChartColor.FromRgba( 54, 162, 235, 0.2f ), ChartColor.FromRgba( 255, 206, 86, 0.2f ), ChartColor.FromRgba( 75, 192, 192, 0.2f ), ChartColor.FromRgba( 153, 102, 255, 0.2f ), ChartColor.FromRgba( 255, 159, 64, 0.2f ) };
     List<string> borderColors = new() { ChartColor.FromRgba( 255, 99, 132, 1f ), ChartColor.FromRgba( 54, 162, 235, 1f ), ChartColor.FromRgba( 255, 206, 86, 1f ), ChartColor.FromRgba( 75, 192, 192, 1f ), ChartColor.FromRgba( 153, 102, 255, 1f ), ChartColor.FromRgba( 255, 159, 64, 1f ) };
-
-    List<double> RandomizeData()
-    {
-        var r = new Random( DateTime.Now.Millisecond );
-
-        return new List<double> { r.Next( 3, 50 ) * r.NextDouble(), r.Next( 3, 50 ) * r.NextDouble(), r.Next( 3, 50 ) * r.NextDouble(), r.Next( 3, 50 ) * r.NextDouble(), r.Next( 3, 50 ) * r.NextDouble(), r.Next( 3, 50 ) * r.NextDouble() };
-    }
+    
     private async void testmath()
     {
-        serverAPIHandler.testdis();
+        serverAPIHandler.GetFiveMinDataSplitIntoDict();
     }
 }

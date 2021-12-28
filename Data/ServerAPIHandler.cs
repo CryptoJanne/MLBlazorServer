@@ -131,23 +131,66 @@ namespace APIHandler
             return divided;
         }
 
-        public async Task<Dictionary<string, float>> testdis()
+        public async Task<List<Dictionary<string, float>>> GetFiveMinDataSplitIntoDict()
         {
-            Dictionary<string, float> returnvalue = new Dictionary<string, float>();
+            List<Dictionary<string, float>> returnList = new List<Dictionary<string, float>>();
+            Dictionary<string, float> core1 = new Dictionary<string, float>();
+            Dictionary<string, float> core2 = new Dictionary<string, float>();
+            Dictionary<string, float> core3 = new Dictionary<string, float>();
+            Dictionary<string, float> core4 = new Dictionary<string, float>();
+            Dictionary<string, float> core5 = new Dictionary<string, float>();
+            Dictionary<string, float> core6 = new Dictionary<string, float>();
+            Dictionary<string, float> core7 = new Dictionary<string, float>();
+            Dictionary<string, float> core8 = new Dictionary<string, float>();
             var query = await QueryAndCalculateAndSplit5MinInto1MinSegments();
             foreach (var minute in query)
             {
                 float cpu1 = 0;
+                float cpu2 = 0;
+                float cpu3 = 0;
+                float cpu4 = 0;
+                float cpu5 = 0;
+                float cpu6 = 0;
+                float cpu7 = 0;
+                float cpu8 = 0;
                 foreach (var second in minute)
                 {
                     cpu1 += second.cpu.core1;
+                    cpu2 += second.cpu.core2;
+                    cpu3 += second.cpu.core3;
+                    cpu4 += second.cpu.core4;
+                    cpu5 += second.cpu.core5;
+                    cpu6 += second.cpu.core6;
+                    cpu7 += second.cpu.core7;
+                    cpu8 += second.cpu.core8;
                 }
 
                 cpu1 = cpu1 / minute.Count;
-                returnvalue.Add(minute.First().tid.ToString(), cpu1);
+                cpu2 = cpu2 / minute.Count;
+                cpu3 = cpu3 / minute.Count;
+                cpu4 = cpu4 / minute.Count;
+                cpu5 = cpu5 / minute.Count;
+                cpu6 = cpu6 / minute.Count;
+                cpu7 = cpu7 / minute.Count;
+                cpu8 = cpu8 / minute.Count;
+                core1.Add(minute.First().tid.ToString(), cpu1);
+                core2.Add(minute.First().tid.ToString(), cpu2);
+                core3.Add(minute.First().tid.ToString(), cpu3);
+                core4.Add(minute.First().tid.ToString(), cpu4);
+                core5.Add(minute.First().tid.ToString(), cpu5);
+                core6.Add(minute.First().tid.ToString(), cpu6);
+                core7.Add(minute.First().tid.ToString(), cpu7);
+                core8.Add(minute.First().tid.ToString(), cpu8);
             }
-
-            return returnvalue;
+            returnList.Add(core1);
+            returnList.Add(core2);
+            returnList.Add(core3);
+            returnList.Add(core4);
+            returnList.Add(core5);
+            returnList.Add(core6);
+            returnList.Add(core7);
+            returnList.Add(core8);
+            return returnList;
         }
     }
 }
