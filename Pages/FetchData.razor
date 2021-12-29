@@ -49,10 +49,28 @@
     <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
         <LineChart @ref="cpuCore8" TItem="double" OptionsObject="@chartOptions"/>
     </Column>
-    
+    <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
+        <LineChart @ref="gpuCoreUtilization" TItem="double" OptionsObject="@chartOptions"/>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
+        <LineChart @ref="gpuMemoryUtilization" TItem="double" OptionsObject="@chartOptions"/>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
+        <LineChart @ref="gpuPowerDraw" TItem="double" OptionsObject="@chartOptions"/>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
+        <LineChart @ref="gpuTemperature" TItem="double" OptionsObject="@chartOptions"/>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
+        <Chart @ref="HDD1PieChart" Type="ChartType.Pie" TItem="double" Options="@pieChartOptions" />
+    </Column>
+    <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
+        <Chart @ref="HDD2PieChart" Type="ChartType.Pie" TItem="double" Options="@pieChartOptions" />
+    </Column>
 </Row>
-
-<Button Clicked="@(async () => await HandleRedraw())">Redraw</Button>
+<Button Color="Blazorise.Color.Light" Outline Clicked="@(async () => await HandleRedrawCPU())">Refresh CPU</Button>
+<Button Color="Blazorise.Color.Light" Outline Clicked="@(async () => await HandleRedrawGPU())">Refresh GPU</Button>
+<Button Color="Blazorise.Color.Light" Outline Clicked="@(async () => await HandleRedrawHDDs())">Refresh Harddrives</Button>
 
 @code
 {
@@ -72,15 +90,39 @@
     LineChart<double> cpuCore6;
     LineChart<double> cpuCore7;
     LineChart<double> cpuCore8;
+    LineChart<double> gpuCoreUtilization;
+    LineChart<double> gpuMemoryUtilization;
+    LineChart<double> gpuPowerDraw;
+    LineChart<double> gpuTemperature;
+    Chart<double> HDD1PieChart;
+    Chart<double> HDD2PieChart;
 
     protected override async Task OnAfterRenderAsync( bool firstRender )
     {
         if ( firstRender )
         {
-            await HandleRedraw();
+            await HandleRedrawCPU();
+            await HandleRedrawGPU();
+            await HandleRedrawHDDs();
         }
     }
-    async Task HandleRedraw()
+    
+    async Task HandleRedrawHDDs()
+    {
+        await HDD1PieChart.Clear();
+        await HDD2PieChart.Clear();
+        string[] labelsForHDD = {"free [GB]", "used [GB]"};
+        var HDDData = await serverAPIHandler.GetCurretHardDriveData();
+        List<double> HDD1Data = new List<double>();
+        List<double> HDD2Data = new List<double>();
+        HDD1Data.Add(HDDData.Item1);
+        HDD1Data.Add(HDDData.Item2);
+        HDD2Data.Add(HDDData.Item3);
+        HDD2Data.Add(HDDData.Item4);
+        await HDD1PieChart.AddLabelsDatasetsAndUpdate(labelsForHDD, GetPieChartDataset(HDD1Data, "Harddrive 1"));
+        await HDD2PieChart.AddLabelsDatasetsAndUpdate(labelsForHDD, GetPieChartDataset(HDD2Data, "Harddrive 2"));
+    }
+    async Task HandleRedrawCPU()
     {
         await cpuCore1.Clear();
         await cpuCore2.Clear();
@@ -90,7 +132,9 @@
         await cpuCore6.Clear();
         await cpuCore7.Clear();
         await cpuCore8.Clear();
-        var kwekek = await serverAPIHandler.GetFiveMinDataSplitIntoDict();
+
+        var cpuData = await serverAPIHandler.GetFiveMinDataSplitIntoDictCpu();
+        
         List<double> core1 = new List<double>();
         List<double> core2 = new List<double>();
         List<double> core3 = new List<double>();
@@ -99,54 +143,55 @@
         List<double> core6 = new List<double>();
         List<double> core7 = new List<double>();
         List<double> core8 = new List<double>();
-        for (int i = 0; i < kwekek.Count; i++)
+
+        for (int i = 0; i < cpuData.Count; i++)
         {
             switch (i)
             {
                 case 0:
-                    foreach (var val in kwekek[i].Values)
+                    foreach (var val in cpuData[i].Values)
                     {
                         core1.Add(val);
                     }
                     break;
                 case 1:
-                    foreach (var val in kwekek[i].Values)
+                    foreach (var val in cpuData[i].Values)
                     {
                         core2.Add(val);
                     }
                     break;    
                 case 2:
-                    foreach (var val in kwekek[i].Values)
+                    foreach (var val in cpuData[i].Values)
                     {
                         core3.Add(val);
                     }
                     break;
                 case 3:
-                    foreach (var val in kwekek[i].Values)
+                    foreach (var val in cpuData[i].Values)
                     {
                         core4.Add(val);
                     }
                     break;
                 case 4:
-                    foreach (var val in kwekek[i].Values)
+                    foreach (var val in cpuData[i].Values)
                     {
                         core5.Add(val);
                     }
                     break;
                 case 5:
-                    foreach (var val in kwekek[i].Values)
+                    foreach (var val in cpuData[i].Values)
                     {
                         core6.Add(val);
                     }
                     break;
                 case 6:
-                    foreach (var val in kwekek[i].Values)
+                    foreach (var val in cpuData[i].Values)
                     {
                         core7.Add(val);
                     }
                     break;
                 case 7:
-                    foreach (var val in kwekek[i].Values)
+                    foreach (var val in cpuData[i].Values)
                     {
                         core8.Add(val);
                     }
@@ -173,6 +218,61 @@
         //await setDataForTest();
     }
 
+    async Task HandleRedrawGPU()
+    {
+        await gpuCoreUtilization.Clear();
+        await gpuMemoryUtilization.Clear();
+        await gpuPowerDraw.Clear();
+        await gpuTemperature.Clear();
+
+        var gpuData = await serverAPIHandler.GetFiveMinDataSplitIntoDictGPU();
+
+        List<double> gpucoreutil = new List<double>();
+        List<double> gpumemutil = new List<double>();
+        List<double> gpupowerdraw = new List<double>();
+        List<double> gputemp = new List<double>();
+
+        for (int i = 0; i < gpuData.Count; i++)
+        {
+            switch (i)
+            {
+                case 0:
+                    foreach (var val in gpuData[i].Values)
+                    {
+                        gpupowerdraw.Add(val);
+                    }
+                    break;
+                case 1:
+                    foreach (var val in gpuData[i].Values)
+                    {
+                        gputemp.Add(val);
+                    }
+                    break;
+                case 2:
+                    foreach (var val in gpuData[i].Values)
+                    {
+                        gpumemutil.Add(val);
+                    }
+                    break;
+                case 3:
+                    foreach (var val in gpuData[i].Values)
+                    {
+                        gpucoreutil.Add(val);
+                    }
+                    break;
+            }
+        }
+        gpupowerdraw.Reverse();
+        gputemp.Reverse();
+        gpumemutil.Reverse();
+        gpucoreutil.Reverse();
+        
+        await gpuPowerDraw.AddLabelsDatasetsAndUpdate( xAxis, GetLineChartDataset(gpupowerdraw, "GPU PowerUsage") );
+        await gpuTemperature.AddLabelsDatasetsAndUpdate( xAxis, GetLineChartDataset(gputemp, "GPU Temperature") );
+        await gpuMemoryUtilization.AddLabelsDatasetsAndUpdate( xAxis, GetLineChartDataset(gpumemutil, "GPU Memory Utilization") );
+        await gpuCoreUtilization.AddLabelsDatasetsAndUpdate( xAxis, GetLineChartDataset(gpucoreutil, "GPU Core Utilization") );
+    }
+
     LineChartDataset<double> GetLineChartDataset(List<double> data, string chartName)
     {
         return new LineChartDataset<double>
@@ -185,6 +285,17 @@
             Fill = false,
             PointRadius = 2,
             BorderDash = new List<int> { }
+        };
+    }
+    private PieChartDataset<double> GetPieChartDataset(List<double> data, string chartName)
+    {
+        return new()
+        {
+            Label = chartName,
+            Data = data,
+            BackgroundColor = backgroundColors[0],
+            BorderColor = borderColors[0],
+            BorderWidth = 1
         };
     }
     object chartOptions = new
@@ -203,6 +314,10 @@
             }
         }
     };
+    ChartOptions pieChartOptions = new()
+    {
+        AspectRatio = 1.5
+    };
     /*
     async Task setDataForTest()
     {
@@ -218,8 +333,4 @@
     List<string> backgroundColors = new() { ChartColor.FromRgba( 255, 99, 132, 0.2f ), ChartColor.FromRgba( 54, 162, 235, 0.2f ), ChartColor.FromRgba( 255, 206, 86, 0.2f ), ChartColor.FromRgba( 75, 192, 192, 0.2f ), ChartColor.FromRgba( 153, 102, 255, 0.2f ), ChartColor.FromRgba( 255, 159, 64, 0.2f ) };
     List<string> borderColors = new() { ChartColor.FromRgba( 255, 99, 132, 1f ), ChartColor.FromRgba( 54, 162, 235, 1f ), ChartColor.FromRgba( 255, 206, 86, 1f ), ChartColor.FromRgba( 75, 192, 192, 1f ), ChartColor.FromRgba( 153, 102, 255, 1f ), ChartColor.FromRgba( 255, 159, 64, 1f ) };
     
-    private async void testmath()
-    {
-        serverAPIHandler.GetFiveMinDataSplitIntoDict();
-    }
 }

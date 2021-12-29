@@ -44,9 +44,6 @@ namespace APIHandler
     }
     public class ServerAPIHandler
     {
-        
-        public string jesus = "asdf";
-        
         public async Task<List<SystemStats>> QueryTest()
         {
             DateTime now = DateTime.Now;
@@ -69,7 +66,6 @@ namespace APIHandler
                 return bajs;
             }
         }
-        
         public async Task<(List<SystemStats>, DateTime)> QueryServerForLogDataFiveMinutes()
         {
             DateTime now = DateTime.Now;
@@ -83,7 +79,6 @@ namespace APIHandler
                 return (data, now);
             }
         }
-
         public async Task<List<List<SystemStats>>> QueryAndCalculateAndSplit5MinInto1MinSegments()
         {
             List<SystemStats> minOne = new List<SystemStats>();
@@ -130,8 +125,21 @@ namespace APIHandler
             divided.Add(minFive);
             return divided;
         }
-
-        public async Task<List<Dictionary<string, float>>> GetFiveMinDataSplitIntoDict()
+        public async Task<(float, float, float, float)> GetCurretHardDriveData()
+        {
+            var query = await QueryAndCalculateAndSplit5MinInto1MinSegments();
+            
+            var newestMinute = query.First();
+            var newestSecond = newestMinute.Last();
+            
+            string used1Trimmed = newestSecond.harddrive1.used.Trim(new char[] {'G'});
+            string free1Trimmed = newestSecond.harddrive1.free.Trim(new char[] {'G'});
+            string used2Trimmed = newestSecond.harddrive1.used.Trim(new char[] {'G'});
+            string free2Trimmed = newestSecond.harddrive2.free.Trim(new char[] {'G'});
+            
+            return (float.Parse(free1Trimmed), float.Parse(used1Trimmed), float.Parse(free2Trimmed), float.Parse(used2Trimmed));
+        }
+        public async Task<List<Dictionary<string, float>>> GetFiveMinDataSplitIntoDictCpu()
         {
             List<Dictionary<string, float>> returnList = new List<Dictionary<string, float>>();
             Dictionary<string, float> core1 = new Dictionary<string, float>();
@@ -190,6 +198,43 @@ namespace APIHandler
             returnList.Add(core6);
             returnList.Add(core7);
             returnList.Add(core8);
+            return returnList;
+        }
+        public async Task<List<Dictionary<string, float>>> GetFiveMinDataSplitIntoDictGPU()
+        {
+            List<Dictionary<string, float>> returnList = new List<Dictionary<string, float>>();
+            Dictionary<string, float> gputemp = new Dictionary<string, float>();
+            Dictionary<string, float> gpupower = new Dictionary<string, float>();
+            Dictionary<string, float> memutilization = new Dictionary<string, float>();
+            Dictionary<string, float> coreutilization = new Dictionary<string, float>();
+            var query = await QueryAndCalculateAndSplit5MinInto1MinSegments();
+            foreach (var minute in query)
+            {
+                float temp = 0;
+                float power = 0;
+                float memutil = 0;
+                float coreutil = 0;
+                foreach (var second in minute)
+                {
+                    temp += float.Parse(second.gpu.gputemperature);
+                    power += second.gpu.poweruse;
+                    memutil += second.gpu.memoryutilization;
+                    coreutil += second.gpu.gpuutilization;
+                }
+
+                temp = temp / minute.Count;
+                power = power / minute.Count;
+                memutil = memutil / minute.Count;
+                coreutil = coreutil / minute.Count;
+                gputemp.Add(minute.First().tid.ToString(), temp);
+                gpupower.Add(minute.First().tid.ToString(), power);
+                memutilization.Add(minute.First().tid.ToString(), memutil);
+                coreutilization.Add(minute.First().tid.ToString(), coreutil);
+            }
+            returnList.Add(gpupower);
+            returnList.Add(gputemp);
+            returnList.Add(memutilization);
+            returnList.Add(coreutilization);
             return returnList;
         }
     }
