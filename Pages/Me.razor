@@ -7,11 +7,32 @@
 </style>
 
 
-@code {
-    int currentCount = 0;
-
-    void IncrementCount()
-    {
-        currentCount++;
-    }
-}
+<Row>
+    <Column ColumnSize="ColumnSize.Is3">
+        <Alert Color="Color.Primary" Visible="true">
+            picture
+        </Alert>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is4">
+        <Alert Color="Color.Dark" Visible="true">
+            text
+        </Alert>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is5">
+            <Alert Color="Color.Dark" Visible="true">
+                text
+            </Alert>
+        </Column>
+</Row>
+<Row>
+    <Column ColumnSize="ColumnSize.Is8">
+        <Alert Color="Color.None" Visible="true">
+            Is8
+        </Alert>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is4">
+        <Alert Color="Color.Secondary" Visible="true">
+            Is4
+        </Alert>
+    </Column>
+</Row>

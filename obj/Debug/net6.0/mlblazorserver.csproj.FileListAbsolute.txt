@@ -82,3 +82,4 @@
 /home/max/development/server/mlblazorserver/bin/Debug/net6.0/Blazorise.Charts.dll
 /home/max/development/server/mlblazorserver/bin/Debug/net6.0/Blazorise.Bootstrap5.dll
 /home/max/development/server/mlblazorserver/bin/Debug/net6.0/Blazorise.Icons.FontAwesome.dll
+/home/max/development/server/mlblazorserver/bin/Debug/net6.0/certificates/blazor.pfx
