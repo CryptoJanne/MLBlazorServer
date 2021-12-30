@@ -1,0 +1,29 @@
+hr.dotted[b-axq0bwirf7] {
+    border-top: 3px dotted #bbb;
+}
+
+.title-text-one[b-axq0bwirf7] {
+    color: #14A098;
+    padding-bottom: 20px;
+    font-family: bender-black;
+}
+
+.normal-text[b-axq0bwirf7] {
+    color: #CCCCCC;
+    font-family: bender-bold;
+}
+.normal-text-color[b-axq0bwirf7] {
+    color: #14A098;
+    font-family: bender-bold;
+    text-align: center;
+    text-decoration-style: solid;
+    text-decoration: underline;
+    text-decoration-color: #CB2D6F;
+}
+.cursive-explain-text[b-axq0bwirf7] {
+    color: #CCCCCC;
+    font-size: 10px;
+    font-family: bender-regular;
+    font-style: italic;
+    text-align: center;
+}
