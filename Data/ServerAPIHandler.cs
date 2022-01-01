@@ -237,5 +237,24 @@ namespace APIHandler
             returnList.Add(coreutilization);
             return returnList;
         }
+
+        public async Task<Dictionary<string, float>> GetFiveMinDataSplitIntoDictMemoryPercent()
+        {
+            List<Dictionary<string, float>> returnList = new List<Dictionary<string, float>>();
+            Dictionary<string, float> memPercent = new Dictionary<string, float>();
+            var query = await QueryAndCalculateAndSplit5MinInto1MinSegments();
+            foreach (var minute in query)
+            {
+                float percent = 0;
+                foreach (var second in minute)
+                {
+                    percent += second.memory.percentused;
+                }
+
+                percent = percent / minute.Count();
+                memPercent.Add(minute.First().tid.ToString(), percent);
+            }
+            return memPercent;
+        }
     }
 }

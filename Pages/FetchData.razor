@@ -23,7 +23,6 @@
         font-family: bender-bold;
     }
 </style>
-
 <Row>
     <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
         <LineChart @ref="cpuCore1" TItem="double" OptionsObject="@chartOptions"/>
@@ -67,16 +66,19 @@
     <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
         <Chart @ref="HDD2PieChart" Type="ChartType.Pie" TItem="double" Options="@pieChartOptions" />
     </Column>
+    <Column ColumnSize="ColumnSize.Is3.OnWidescreen">
+        <LineChart @ref="memoryPercent" TItem="double" OptionsObject="@chartOptions"/>
+    </Column>
 </Row>
 <Button Color="Blazorise.Color.Light" Outline Clicked="@(async () => await HandleRedrawCPU())">Refresh CPU</Button>
 <Button Color="Blazorise.Color.Light" Outline Clicked="@(async () => await HandleRedrawGPU())">Refresh GPU</Button>
 <Button Color="Blazorise.Color.Light" Outline Clicked="@(async () => await HandleRedrawHDDs())">Refresh Harddrives</Button>
+<Button Color="Blazorise.Color.Light" Outline Clicked="@(async () => await HandleRedrawMemory())">Refresh Memory</Button>
 
 @code
 {
     private bool shouldRender;
     protected override bool ShouldRender() => shouldRender;
-
     
     protected override async Task OnInitializedAsync()
     {
@@ -96,6 +98,7 @@
     LineChart<double> gpuTemperature;
     Chart<double> HDD1PieChart;
     Chart<double> HDD2PieChart;
+    LineChart<double> memoryPercent;
 
     protected override async Task OnAfterRenderAsync( bool firstRender )
     {
@@ -104,9 +107,22 @@
             await HandleRedrawCPU();
             await HandleRedrawGPU();
             await HandleRedrawHDDs();
+            await HandleRedrawMemory();
         }
     }
-    
+
+    async Task HandleRedrawMemory()
+    {
+        await memoryPercent.Clear();
+        var memoryData = await serverAPIHandler.GetFiveMinDataSplitIntoDictMemoryPercent();
+        List<double> memoryPercentData = new List<double>();
+        foreach (var kvp in memoryData)
+        {
+            memoryPercentData.Add(kvp.Value);
+        }
+        memoryPercentData.Reverse();
+        await memoryPercent.AddLabelsDatasetsAndUpdate(xAxis, GetLineChartDataset(memoryPercentData, "Memory usage"));
+    }
     async Task HandleRedrawHDDs()
     {
         await HDD1PieChart.Clear();
