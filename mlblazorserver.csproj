@@ -26,4 +26,14 @@
     <PackageReference Include="RavenDB.Client" Version="5.3.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\images\maxlundh.jpeg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

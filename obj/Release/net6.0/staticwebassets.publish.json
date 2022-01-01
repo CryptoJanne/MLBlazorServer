@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TLxIifnEF1LREyQEB/wNxm8/i7VjRQwkC7SYVqbgu2o=",
+  "Hash": "CYu0brtgl80ZXgqDzfy4xn3PEKhkDqeWTP3fjv8eEZE=",
   "Source": "mlblazorserver",
   "BasePath": "_content/mlblazorserver",
   "Mode": "Default",
@@ -2021,6 +2021,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/favicon.ico"
+    },
+    {
+      "Identity": "/home/max/development/server/mlblazorserver/wwwroot/images/maxlundh.jpeg",
+      "SourceId": "mlblazorserver",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/max/development/server/mlblazorserver/wwwroot/",
+      "BasePath": "_content/mlblazorserver",
+      "RelativePath": "images/maxlundh.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Always",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/maxlundh.jpeg"
     }
   ]
 }

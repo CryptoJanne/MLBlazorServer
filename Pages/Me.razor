@@ -5,34 +5,33 @@
         background-color: #0f292f;
     }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
-<Row>
-    <Column ColumnSize="ColumnSize.Is3">
-        <Alert Color="Color.Primary" Visible="true">
-            picture
-        </Alert>
-    </Column>
-    <Column ColumnSize="ColumnSize.Is4">
-        <Alert Color="Color.Dark" Visible="true">
-            text
-        </Alert>
-    </Column>
-    <Column ColumnSize="ColumnSize.Is5">
-            <Alert Color="Color.Dark" Visible="true">
-                text
-            </Alert>
-        </Column>
-</Row>
-<Row>
-    <Column ColumnSize="ColumnSize.Is8">
-        <Alert Color="Color.None" Visible="true">
-            Is8
-        </Alert>
-    </Column>
-    <Column ColumnSize="ColumnSize.Is4">
-        <Alert Color="Color.Secondary" Visible="true">
-            Is4
-        </Alert>
-    </Column>
-</Row>
+<div class="flex-container">
+    <div class="flex-item-left">
+        <img src="@profilePicSource" class="imgProfilePic" />
+    </div>
+    <div class="flex-item-25">
+        <p class="title-text-one">Max Lundh</p>
+        <p class="normal-text">AGE: 30</p>
+        <p class="normal-text">Location: Malmö, Sweden</p>
+        <p class="normal-text">Cybersecurity specialist student at <a href="https://sih.se/utbildningar/malmo/it-sakerhetsspecialist/">SIH</a></p>
+        <p class="normal-text">CV: <a href="https://google.se">Download here</a></p>
+        </div>
+    <div class="flex-item-25">
+        <p class="undertitle-text-one">Contact</p>
+        <a href="@githubLink" class="fa fa-github"></a>
+        <br/>
+        <a href="@twitterLink" class="fa fa-twitter"></a>
+        <br/>
+        <a href="@emailAddress" class="fa fa-at"></a>
+        </div>
+</div>
+<div class="flex-container">
+    <div class="flex-item-left">
+        
+    </div>
+    <div class="flex-item-right">
+        
+    </div>
+</div>

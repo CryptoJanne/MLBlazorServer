@@ -1,16 +1,111 @@
+/* FONT AWESOME ICONS */
+.fa {
+    position: relative;
+    padding: 3px;
+    background: #ffffff;
+    margin-right: 4px;
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    vertical-align: middle !important;
+    align-items: center;
+}
+.fa:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.fa:hover {
+    opacity: 0.7;
+}
+.fa-at {
+    background: orange;
+    color: white;
+}
+.fa-github {
+    background: #6e5494;
+    color: white;
+    margin-bottom: 10px;
+}
+
+/* Twitter */
+.fa-twitter {
+    background: #55ACEE;
+    color: white;
+    margin-bottom: 10px;
+}
+/* CONTAINERS */
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    font-size: 30px;
+    text-align: center;
+}
+.flex-item-25 {
+    /*background-color: #1e7e34;*/
+    padding: 2px;
+    flex: 25%;
+}
+
+.flex-item-left {
+   /* background-color: #f1f1f1;*/
+    padding: 10px;
+    flex: 50%;
+}
+
+.flex-item-right {
+    /*background-color: dodgerblue;*/
+    padding: 10px;
+    flex: 50%;
+}
+
+/* Responsive layout - makes a one column-layout instead of two-column layout */
+@media (max-width: 800px) {
+    .flex-container {
+        flex-direction: column;
+    }
+}
+
+/* IMAGES */
+
+.imgProfilePic {
+    border: 5px solid #0f6674;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+}
+/* TEXT */
 hr.dotted {
     border-top: 3px dotted #bbb;
+}
+
+.text-align-left {
+    text-align: left;
+}
+
+.text-align-right {
+    text-align: right;
 }
 
 .title-text-one {
     color: #14A098;
     padding-bottom: 20px;
     font-family: bender-black;
+    font-size: 30px;
+}
+.undertitle-text-one {
+    color: white;
+    padding-bottom: 20px;
+    font-family: bender-black;
+    font-size: 22px;
 }
 
 .normal-text {
-    color: #CCCCCC;
+    color: white;
     font-family: bender-bold;
+    font-size: 16px;
 }
 .normal-text-color {
     color: #14A098;
@@ -26,4 +121,25 @@ hr.dotted {
     font-family: bender-regular;
     font-style: italic;
     text-align: center;
+}
+/* LINKS */
+
+/* unvisited link */
+a:link {
+    color: white;
+}
+
+/* visited link */
+a:visited {
+    color: white;
+}
+
+/* mouse over link */
+a:hover {
+    color: white;
+}
+
+/* selected link */
+a:active {
+    color: white;
 }

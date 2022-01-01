@@ -83,3 +83,4 @@
 /home/max/development/server/mlblazorserver/obj/Release/net6.0/mlblazorserver.pdb
 /home/max/development/server/mlblazorserver/obj/Release/net6.0/mlblazorserver.genruntimeconfig.cache
 /home/max/development/server/mlblazorserver/bin/Release/net6.0/certificates/blazor.pfx
+/home/max/development/server/mlblazorserver/bin/Release/net6.0/wwwroot/images/maxlundh.jpeg
