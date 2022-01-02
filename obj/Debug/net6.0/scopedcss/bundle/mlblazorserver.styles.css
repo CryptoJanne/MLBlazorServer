@@ -28,6 +28,12 @@ hr.dotted[b-bkw70lo58x] {
     font-style: italic;
     text-align: center;
 }
+/* _content/mlblazorserver/Pages/FetchData.razor.rz.scp.css */
+.center[b-cm9s5i7ucr] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 /* _content/mlblazorserver/Pages/Index.razor.rz.scp.css */
 hr.dotted[b-axq0bwirf7] {
     border-top: 3px dotted #bbb;
