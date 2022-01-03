@@ -1,0 +1,15 @@
+@inherits ArticlePreviewComponent
+
+<div class="post-preview">
+    <NavLink href="@($"viewpost/{articlePost.Id}")">
+        <h2 class="post-title">
+            @articlePost.Title
+        </h2>
+        <h3 class="post-subtitle">
+            @articlePost.PostSummary
+        </h3>
+    </NavLink>
+    <p class="post-meta">Posted by
+        <NavLink href="/">@articlePost.Author</NavLink>
+        on @articlePost.Posted.ToShortDateString()</p>
+</div>

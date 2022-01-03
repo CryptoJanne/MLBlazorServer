@@ -40,6 +40,9 @@
     <Content Update="wwwroot\images\maxlundh.jpeg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="Pages\Articles.razor.css">
+      <DependentUpon>Articles.razor</DependentUpon>
+    </Content>
   </ItemGroup>
 
 </Project>
