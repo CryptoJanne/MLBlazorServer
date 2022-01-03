@@ -1,4 +1,5 @@
 /home/max/development/server/mlblazorserver/bin/Release/net6.0/publish/certificates/blazor.pfx
+/home/max/development/server/mlblazorserver/bin/Release/net6.0/publish/certificates/https-le.pfx
 /home/max/development/server/mlblazorserver/bin/Release/net6.0/publish/mlblazorserver
 /home/max/development/server/mlblazorserver/bin/Release/net6.0/publish/appsettings.Development.json
 /home/max/development/server/mlblazorserver/bin/Release/net6.0/publish/appsettings.json
