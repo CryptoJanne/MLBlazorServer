@@ -43,10 +43,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/max/development/server/mlblazorserver/Pages/Blog.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQmxvZy5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = b-bkw70lo58x
-
 [/home/max/development/server/mlblazorserver/Pages/FetchData.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRmV0Y2hEYXRhLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-cm9s5i7ucr
